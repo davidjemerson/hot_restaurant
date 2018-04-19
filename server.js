@@ -39,39 +39,29 @@ app.get("/reserve", function(req, res) {
 });
 
 app.get("/api/reservations/", function(req, res) {
-	var chosenRes = req.params.reservation;
-
-	console.log(chosenRes);
-
-	for (var i = 0 ; i < reservations.length ; i++) {
-		if (chosenRes === reservations[i].routeName) {
-			return res.json(reservations[i]);
-		}
-	}
-
-	return res.json(false);
+	return res.json(reservations);
 });
 
 app.get("/api/waitlist/", function(req, res) {
-	var chosenWait = req.params.wait;
-
-	console.log(chosenWait);
-
-	for (var i = 0 ; i < waitlist.length ; i++) {
-		if (chosenWait === waitlist[i].routeName) {
-			return res.json(waitlist[i]);
-		}
-	}
-
-	return res.json(false);
+	return res.json(waitlist);
 });
 
 app.post("/api/reservations", function(req, res) {
-	var newReservation = req.body;
-	newReservation.routeName = newReservation.id.replace(/\s+/g, "").toLowerCase();
-	console.log(newReservation);
-	reservations.push(newReservation);
-	res.json(newReservation);
+	if (reservations.length < 5) {
+		var newReservation = req.body;
+		newReservation.routeName = newReservation.id.replace(/\s+/g, "").toLowerCase();
+		console.log(newReservation);
+		reservations.push(newReservation);
+		console.log(reservations);
+		res.json(newReservation);
+	}
+	else {
+		var newWaitlist = req.body;
+		newWaitlist.routeName = newWaitlist.id.replace(/\s+/g, "").toLowerCase();
+		console.log(newWaitlist);
+		waitlist.push(newWaitlist);
+		res.json(newWaitlist);
+	}
 })
 
 app.listen(PORT, function() {
