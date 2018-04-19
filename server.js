@@ -55,6 +55,7 @@ app.post("/api/reservations", function(req, res) {
 		reservations.push(newReservation);
 		console.log(reservations);
 		res.json(newReservation);
+		alert("You've got a table!");
 	}
 	else {
 		var newWaitlist = req.body;
@@ -62,6 +63,7 @@ app.post("/api/reservations", function(req, res) {
 		console.log(newWaitlist);
 		waitlist.push(newWaitlist);
 		res.json(newWaitlist);
+		alert("We're all booked, but you've been added to the waitlist");
 	}
 })
 
