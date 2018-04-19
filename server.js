@@ -17,6 +17,15 @@ var reservations = [
 	}
 ];
 
+var waitlist = [
+	{
+		name: "FN-2187",
+		phone: "816-555-7623",
+		email: "anotherfake@email.com",
+		id: "12345"
+	}
+];
+
 app.get("/", function(req, res) {
 	res.sendFile(path.join(__dirname, "home.html"));
 });
@@ -29,14 +38,28 @@ app.get("/reserve", function(req, res) {
 	res.sendFile(path.join(__dirname, "reserve.html"));
 });
 
-app.get("/api/reservations/:reservation", function(req, res) {
-	var chosen = req.params.reservation;
+app.get("/api/reservations/", function(req, res) {
+	var chosenRes = req.params.reservation;
 
-	console.log(chosen);
+	console.log(chosenRes);
 
 	for (var i = 0 ; i < reservations.length ; i++) {
-		if (chosen === reservations[i].routeName) {
+		if (chosenRes === reservations[i].routeName) {
 			return res.json(reservations[i]);
+		}
+	}
+
+	return res.json(false);
+});
+
+app.get("/api/waitlist/", function(req, res) {
+	var chosenWait = req.params.wait;
+
+	console.log(chosenWait);
+
+	for (var i = 0 ; i < waitlist.length ; i++) {
+		if (chosenWait === waitlist[i].routeName) {
+			return res.json(waitlist[i]);
 		}
 	}
 
